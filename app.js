@@ -1,18 +1,8 @@
-'use strict';
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-};
+const express = require('express'); // imports express framework
+const sls = require('serverless-http'); //imports serverless-http package
+const app = express(); //creates new express application
+app.get('/', async (req, res, next) => {  // creates a new route handler for the root path
+  res.status(200).send('Hello World') // exports the Express application wrapped in the serverless-http middleware. This will allow to deploy your Express server to AWS Lambda.
+});
+module.exports.server = sls(app);
